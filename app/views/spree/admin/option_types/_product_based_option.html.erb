@@ -1,0 +1,13 @@
+<div id="variant" style="float:none">
+  <%= render :partial => "spree/admin/variants/autocomplete", :formats => :js %>
+</div>
+
+<div data-hook="add_product_name" class="field eight columns alpha" style="float:none">
+  <%= hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth" %>
+</div>
+
+<div id="add_variant">
+
+</div>
+
+

@@ -6,14 +6,14 @@ require 'spree_option_is_product/version'
 Gem::Specification.new do |gem|
   gem.name          = "spree_option_is_product"
   gem.version       = SpreeOptionIsProduct::VERSION
-  gem.authors       = ["geermc4"]
+  gem.authors       = ["German Garcia"]
   gem.email         = ["geermc4@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = "Make options in variants a product"
+  gem.summary       = "Optionally relate a option to a product so that price and stock for them are taken in to account"
+  gem.homepage     = "https://github.com/geermc4/spree_option_is_product"
 
   gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  gem.add_dependency("spree_core",">=1.3")
 end
