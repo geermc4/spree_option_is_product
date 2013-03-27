@@ -1,0 +1,11 @@
+table{
+  tbody#option_values{
+    tr:first-child{
+      td.name{
+        input{
+          width: 220px;
+        }
+      }
+    }
+  }
+}
