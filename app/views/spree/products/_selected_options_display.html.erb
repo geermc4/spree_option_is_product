@@ -1,0 +1,8 @@
+<div id="selected_options">
+  <h2>Options</h2>
+  <% @product.option_types.each do |o| %>
+    <div style="float:left"><%=o.presentation %> -&nbsp;</div>
+    <div id="selected_option_<%=o.id%>" style="float:none"> None </div>
+    <input type="hidden" id="product_option_<%=o.id%>">
+  <% end %>
+</div>
