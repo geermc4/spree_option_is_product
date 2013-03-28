@@ -18,7 +18,7 @@ jQuery ->
         $('#product_option_' + oid).val(el.val())
         update_cart_total(parseFloat(el.siblings('input[type="hidden"]').val(), 10))
     update_cart_total = (add) ->
-      current_total = parseFloat($('#product-price span.price').text().replace(/\$/, ""), 10)
+      current_total = Math.round(parseFloat($('#product-price span.price').text().replace(/\$/, ""), 10))
       $('#product-price span.price').text "$" + (current_total + add )
     $('.product_option').each(->
         update_cart_options $(this)
