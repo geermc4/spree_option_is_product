@@ -1,8 +1,27 @@
-<% unless @product.product_options.blank? %>
-  <div class="columns ten alpha" style="float: none; clear: both;">
+<div class="row" id="product-is-option-configure">
+  <h2 class="product-title">Configure</h2>
+  <div class="product_options">
     <% @product.product_options.each do |o| %>
-      <h6><%=o[:display] %></h6>
-      <%= select("option", o[:id], o[:options].map { |v| ["#{v[:presentation]} - $#{v[:price]}", v[:id]] }, {:include_blank => 'None'}, {:class => 'product_option'}) %>
+      <div class="product_option">
+        <fieldset>
+          <input type="hidden" name="product_option_id" value="<%= o[:id] %>" />
+          <legend><%=o[:display] %></legend>
+          <dl>
+            <dt><%=o[:display] %></dt>
+          </dl>
+          <ul>
+            <% o[:options].each do |v| %>
+              <li>
+                <label>
+                  <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], {:class => 'product_option'} %>
+                  <strong><%= "#{v[:presentation]} - $#{v[:price]}" %></strong>
+                  <input type="hidden" name="<%= "option_#{o[:display].downcase.gsub(/\s/, '_')}_price" %>" value="<%= "#{v[:price]}" %>" />
+                </label>
+              </li>
+            <% end %>
+          </ul>
+        </fieldset>
+      </div>
     <% end %>
   </div>
-<% end %>
+</div>
