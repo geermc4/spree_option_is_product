@@ -1,6 +1,8 @@
-<div class="columns ten alpha" style="float: none; clear: both;">
-  <% @product.product_options.each do |o| %>
-    <h6><%=o[:display] %></h6>
-    <%= select("option", o[:id], o[:options].map { |v| ["#{v[:presentation]} - $#{v[:price]}", v[:id]] }, {:include_blank => 'None'}, {:class => 'product_option'}) %>
-  <% end %>
-</div>
+<% unless @product.product_options.blank? %>
+  <div class="columns ten alpha" style="float: none; clear: both;">
+    <% @product.product_options.each do |o| %>
+      <h6><%=o[:display] %></h6>
+      <%= select("option", o[:id], o[:options].map { |v| ["#{v[:presentation]} - $#{v[:price]}", v[:id]] }, {:include_blank => 'None'}, {:class => 'product_option'}) %>
+    <% end %>
+  </div>
+<% end %>
