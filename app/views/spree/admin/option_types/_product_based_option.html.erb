@@ -1,11 +1,12 @@
+<div id="variant-error-messages" class="row" style="display: none">
+  <div class="warning-dialog align-center"></div>
+</div>
 <div class="row">
   <div id="variant" style="float: none;">
     <%= render :partial => "spree/admin/variants/autocomplete", :formats => :js %>
   </div>
-
   <div id="variant-chooser" data-hook="add_product_name" class="field thirteen columns alpha">
     <%= hidden_field_tag :add_variant_id, "", :class => "variant_autocomplete fullwidth" %>
   </div>
-
   <div id="add_variant" class="field three columns omega"></div>
 </div>
