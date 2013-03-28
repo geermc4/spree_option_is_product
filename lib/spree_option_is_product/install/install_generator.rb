@@ -7,7 +7,7 @@ module SpreeOptionIsProduct
       end
       def add_stylesheets
         append_file "app/assets/stylesheets/admin/all.css", "*= admin/spree_option_is_product\n"
-        append_file "app/assets/stylesheets/admin/all.css", "*= fancybox\n"
+      end
       def add_migrations
         run 'rake railties:install:migrations FROM=spree_option_is_product'
       end
