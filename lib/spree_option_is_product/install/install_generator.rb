@@ -3,7 +3,6 @@ module SpreeOptionIsProduct
     class InstallGenerator < Rails::Generators::Base
       def add_javascripts
         append_file "app/assets/javascripts/admin/all.js", "//= require admin/option_types\n"
-        append_file "app/assets/javascripts/admin/all.js", "//= require fancybox\n"
       end
       def add_stylesheets
         append_file "app/assets/stylesheets/admin/all.css", "*= admin/spree_option_is_product\n"
