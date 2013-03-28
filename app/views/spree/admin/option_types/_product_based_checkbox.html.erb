@@ -1,7 +1,11 @@
 <div class="omega two columns">
   <%= f.field_container :product_based do %>
     <%= f.label :product_based, t(:product_based) %>
-    <%= f.check_box :product_based %>
+    <% if @option_type.product_based %>
+      <%= f.check_box :product_based, { :disabled => 'disabled' } %>
+    <% else %>
+      <%= f.check_box :product_based %>
+    <% end %>
     <%= f.error_message_on :product_based %>
   <% end %>
 </div>
