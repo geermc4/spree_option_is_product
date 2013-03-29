@@ -14,12 +14,17 @@ jQuery ->
       el = $('fieldset ul li label input:checked', options)
       oid = $('fieldset input[name="product_option_id"]', options).val()
       if el.length > 0
-        $('#selected_option_' + oid).text el.siblings('strong').text()
+        $('#selected_option_' + oid + ' span').text el.siblings('strong').text()
         $('#product_option_' + oid).val(el.val())
-        update_cart_total(parseFloat(el.siblings('input[type="hidden"]').val(), 10))
-    update_cart_total = (add) ->
-      current_total = Math.round(parseFloat($('#product-price span.price').text().replace(/\$/, ""), 10))
-      $('#product-price span.price').text "$" + (current_total + add )
+        $('#product_option_' + oid + '_price').val(parseFloat(el.siblings('input[type="hidden"]').val(), 10))
+        update_cart_total()
+    update_cart_total = () ->
+      base_price = $('#base_price').val()
+      current_total = parseFloat(base_price, 10)
+      $('.product_option_prices').each(->
+        current_total += parseFloat($(this).val(), 10)
+      )
+      $('#product-price span.price').text "$" + ( current_total.toFixed(2) )
     $('.product_option').each(->
         update_cart_options $(this)
     )
