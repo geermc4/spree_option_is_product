@@ -1,5 +1,3 @@
-# Not working yet
-
 # SpreeOptionIsProduct
 
 Make options in variants a product
