@@ -5,7 +5,8 @@ module SpreeOptionIsProduct
         append_file "app/assets/javascripts/admin/all.js", "//= require admin/option_types\n"
       end
       def add_stylesheets
-        append_file "app/assets/stylesheets/admin/all.css", "*= admin/spree_option_is_product\n"
+        append_file "app/assets/stylesheets/admin/all.css", " *= require admin/spree_option_is_product\n"
+        append_file "app/assets/stylesheets/store/all.css", " *= require store/spree_option_is_product\n"
       end
       def add_migrations
         run 'rake railties:install:migrations FROM=spree_option_is_product'
