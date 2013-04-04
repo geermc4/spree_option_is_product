@@ -1,6 +1,7 @@
 Spree::OrdersController.class_eval do
   before_filter :grab_options, :only => :populate
   append_after_filter :set_line_item_parent, :only => :populate
+  append_after_filter :update_children, :only => :update
 
   private
   def grab_options
@@ -23,6 +24,15 @@ Spree::OrdersController.class_eval do
           line_item.parent_id = parent.id
           line_item.save
         end
+      end
+    end
+  end
+
+  def update_children
+    unless current_order.blank? || current_order.line_items.blank?
+      current_order.line_items.where("parent_id is not null").each do |l|
+        l.quantity = l.parent.quantity
+        l.save
       end
     end
   end
