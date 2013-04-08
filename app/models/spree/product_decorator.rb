@@ -12,9 +12,9 @@ Spree::Product.class_eval do
       values = []
       o.option_values.each do |v|
         values << {
-          :id           => v.variant.id,
+          :id           => v.id,
           :presentation => v.presentation,
-          :price        => v.variant.price,
+          :price        => v.special_price || v.variant.price,
         }
       end
       options << { :id => o.id, :display => o.presentation, :options => values }
