@@ -11,13 +11,15 @@
               <dt><%=o[:display] %></dt>
             </dl>
             <ul>
-              <li>
-                <label>
-                  <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", "", {:class => 'product_option'} %>
-                  <strong>No <%=o[:display] %></strong>
-                  <input type="hidden" name="<%= "option_#{o[:display].downcase.gsub(/\s/, '_')}_price" %>" value="0" />
-                </label>
-              </li>
+              <% if o[:optional] %>
+                <li>
+                  <label>
+                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", "", {:class => 'product_option'} %>
+                    <strong>No <%=o[:display] %></strong>
+                    <input type="hidden" name="<%= "option_#{o[:display].downcase.gsub(/\s/, '_')}_price" %>" value="0" />
+                  </label>
+                </li>
+              <% end %>
               <% o[:options].each do |v| %>
                 <li>
                   <label>

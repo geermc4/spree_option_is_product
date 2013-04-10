@@ -17,8 +17,13 @@ Spree::Product.class_eval do
           :price        => v.special_price || v.variant.price,
         }
       end
-      options << { :id => o.id, :display => o.presentation, :options => values }
+      options << {
+        :id       => o.id,
+        :display  => o.presentation,
+        :optional => o.optional?,
+        :options  => values }
     end
+    ::Rails.logger.info("debugi - #{options.inspect}")
     options
   end
 end

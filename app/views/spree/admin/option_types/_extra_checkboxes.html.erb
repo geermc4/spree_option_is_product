@@ -9,3 +9,14 @@
     <%= f.error_message_on :product_based %>
   <% end %>
 </div>
+
+<div class="omega two columns">
+  <%= f.field_container :optional do %>
+    <%= f.label :optional, t(:optional) %>
+    <% if @option_type.product_based %>
+      <%= f.check_box :optional %>
+    <% end %>
+    <%= f.error_message_on :optional %>
+  <% end %>
+</div>
+
