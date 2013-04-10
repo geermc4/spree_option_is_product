@@ -23,7 +23,6 @@ Spree::Product.class_eval do
         :optional => o.optional?,
         :options  => values }
     end
-    ::Rails.logger.info("debugi - #{options.inspect}")
     options
   end
 end
