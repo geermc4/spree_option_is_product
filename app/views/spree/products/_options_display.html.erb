@@ -20,10 +20,10 @@
                   </label>
                 </li>
               <% end %>
-              <% o[:options].each do |v| %>
+              <% o[:options].each_with_index do |v,i| %>
                 <li>
                   <label>
-                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], {:class => 'product_option'} %>
+                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], i==0, {:class => 'product_option'} %>
                     <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "$#{v[:price]}" %></span>
                     <input type="hidden" name="<%= "option_#{o[:display].downcase.gsub(/\s/, '_')}_price" %>" value="<%= "#{v[:price]}" %>" />
                   </label>
