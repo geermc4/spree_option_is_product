@@ -14,6 +14,8 @@ Spree::Product.class_eval do
         values << {
           :id           => v.id,
           :presentation => v.presentation,
+          :quantity     => v.quantity,
+          :variant_id   => v.variant_id,
           :price        => v.special_price || v.variant.price,
         }
       end
