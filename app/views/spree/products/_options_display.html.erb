@@ -16,7 +16,8 @@
                   <label>
                     <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", "", {:class => 'product_option'} %>
                     <strong>No <%=o[:display] %></strong>
-                    <input type="hidden" name="<%= "option_#{o[:display].downcase.gsub(/\s/, '_')}_price" %>" value="0" />
+                    <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="0" />
+                    <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "0" %>" />
                   </label>
                 </li>
               <% end %>
@@ -25,7 +26,8 @@
                   <label>
                     <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], i==0, {:class => 'product_option'} %>
                     <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "$#{v[:price]}" %></span>
-                    <input type="hidden" name="<%= "option_#{o[:display].downcase.gsub(/\s/, '_')}_price" %>" value="<%= "#{v[:price]}" %>" />
+                    <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
+                    <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
                   </label>
                 </li>
               <% end %>

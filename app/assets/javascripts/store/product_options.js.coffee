@@ -16,13 +16,19 @@ jQuery ->
       if el.length > 0
         $('#selected_option_' + oid + ' span').text el.siblings('strong').text()
         $('#product_option_' + oid).val(el.val())
-        $('#product_option_' + oid + '_price').val(parseFloat(el.siblings('input[type="hidden"]').val(), 10))
+        $('#product_option_' + oid + '_price').val(parseFloat(el.siblings('input[name="option_' + oid + '_price"]').val(), 10))
+        $('#product_option_' + oid + '_quantity').val(parseFloat(el.siblings('input[name="option_' + oid + '_qty"]').val(), 10))
         update_cart_total()
     update_cart_total = () ->
       base_price = $('#base_price').val()
       current_total = parseFloat(base_price, 10)
       $('.product_option_prices').each(->
-        current_total += parseFloat($(this).val(), 10)
+        current_element = $(this)
+        multiply = 1
+        item_multiply = parseInt(current_element.siblings('.product_option_quantities').val(), 10)
+        if item_multiply > 0
+          multiply = item_multiply
+        current_total += (parseFloat(current_element.val(), 10) * multiply)
       )
       $('#product-price span.price').text "$" + ( current_total.toFixed(2) )
     $('.product_option').each(->

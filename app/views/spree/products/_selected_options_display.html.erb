@@ -5,7 +5,8 @@
       <li id="selected_option_<%=o.id%>">
         <span>No <%=o.presentation %></span>
         <input type="hidden" id="product_option_<%=o.id%>" name="product_options[<%=o.id%>]">
-        <input type="hidden" class="product_option_prices" id="product_option_<%=o.id%>_price" value="0">
+        <input type="hidden" id="product_option_<%=o.id%>_price" class="product_option_prices" value="0">
+        <input type="hidden" id="product_option_<%=o.id%>_quantity" class="product_option_quantities" value="0">
       </li>
     <% end %>
   </ul>
