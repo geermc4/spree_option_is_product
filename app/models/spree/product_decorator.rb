@@ -27,4 +27,13 @@ Spree::Product.class_eval do
     end
     options
   end
+
+  def master_price
+    new_price = self.price
+    if !self.product_options.nil?
+      new_price += self.product_options.select{ |po| po[:optional] == false }.map{ |opt, sum| opt[:options].first[:price] }.inject(:+)
+    end
+    Spree::Money.new(new_price || 0, {:currency => self.currency} )
+  end
+
 end
