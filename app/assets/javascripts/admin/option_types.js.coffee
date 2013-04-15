@@ -10,6 +10,7 @@ jQuery ->
           $("#variant-error-messages .warning-dialog").html ""
         ), 1000
       ).show()
+      return
     if $('#option_type_product_based:checked').length > 0
       $('#new_add_option_value').appendTo("#add_variant")
 
@@ -35,3 +36,14 @@ jQuery ->
         $("#option_values tr:first-child").css("background-color": "#9fc820").animate
           "background-color": "#fff"
           , 1000
+        return
+
+      $('#option_values tr td:nth-child(5) input[type="checkbox"]:checked').addClass 'Checked'
+      $('#option_values tr td:nth-child(5) input[type="checkbox"]').click ->
+        if !$(this).hasClass('Checked')
+          $('#option_values tr td:nth-child(5) input.Checked').removeClass('Checked')
+          $('#option_values tr td:nth-child(5) input[type="checkbox"]').prop 'checked', ''
+          $(this).prop('checked', 'checked').addClass 'Checked'
+        else
+          $(this).removeClass 'Checked'
+        return
