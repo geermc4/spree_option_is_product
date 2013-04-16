@@ -12,11 +12,12 @@ Spree::Product.class_eval do
       values = []
       o.option_values.each do |v|
         values << {
-          :id           => v.id,
-          :presentation => v.presentation,
-          :quantity     => v.quantity,
-          :variant_id   => v.variant_id,
-          :price        => v.special_price || v.variant.price,
+          :id             => v.id,
+          :presentation   => v.presentation,
+          :quantity       => v.quantity,
+          :variant_id     => v.variant_id,
+          :price          => v.special_price || v.variant.price,
+          :default_option => v.default_option,
         }
       end
       options << {
@@ -31,7 +32,9 @@ Spree::Product.class_eval do
   def master_price
     new_price = self.price
     if !self.product_options.nil?
-      new_price += self.product_options.select{ |po| po[:optional] == false }.map{ |opt, sum| opt[:options].first[:price] }.inject(:+)
+      options_price = self.product_options.select{ |po| po[:optional] == false }.map{ |opt, sum| opt[:options].first[:price] }.inject(:+)
+      optional_values_default_pricing = self.product_options.select{ |po| po[:optional] == true }.collect{ |opt| opt[:options] }.collect{ |op| op.select{ |pop| pop[:default_option] == true }.first }.select{ |s| !s.nil? }.select{ |s| !s.empty? }.map{ |v| v[:price] }.inject(:+).to_f
+      new_price += (options_price + (optional_values_default_pricing.nil? ? 0 : optional_values_default_pricing))
     end
     Spree::Money.new(new_price || 0, {:currency => self.currency} )
   end
