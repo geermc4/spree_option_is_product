@@ -3,6 +3,10 @@
     <h2 class="product-title">Configure</h2>
     <div class="product_options">
       <% @product.product_options.each do |o| %>
+        <%
+          optional_value = o[:options].select{ |opt| opt[:default_option] == true }
+          optional_value_id = (!optional_value.empty?) ? optional_value.first : {}
+        %>
         <div class="product_option">
           <fieldset>
             <input type="hidden" name="product_option_id" value="<%= o[:id] %>" />
@@ -14,7 +18,7 @@
               <% if o[:optional] %>
                 <li>
                   <label>
-                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", "", true, {:class => 'product_option'} %>
+                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", "", (optional_value.nil? ? true : false), {:class => 'product_option'} %>
                     <strong>No <%=o[:display] %></strong>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="0" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "0" %>" />
@@ -24,7 +28,7 @@
               <% o[:options].each_with_index do |v,i| %>
                 <li>
                   <label>
-                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!o[:optional] && i==0), {:class => 'product_option'} %>
+                    <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option'} %>
                     <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "$#{v[:price]}" %></span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
