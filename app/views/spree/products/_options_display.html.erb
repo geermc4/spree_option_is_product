@@ -29,7 +29,7 @@
                 <li>
                   <label>
                     <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option'} %>
-                    <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "$#{v[:price]}" %></span>
+                    <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
                   </label>
