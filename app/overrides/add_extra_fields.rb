@@ -1,15 +1,11 @@
-fields=['quantity','special_price', 'default_option']
+Deface::Override.new(
+  :virtual_path   => "spree/admin/option_types/edit",
+  :name           => "add_extra_headers",
+  :insert_before  => ".actions",
+  :partial        => "spree/admin/option_types/extra_headers")
 
-fields.each do |f|
-  Deface::Override.new(
-    :virtual_path   => "spree/admin/option_types/edit",
-    :name           => "add_#{f}_header",
-    :insert_before  => ".actions",
-    :text           => "<th><%= t(:#{f}) %></th>")
-
-  Deface::Override.new(
-    :virtual_path   => "spree/admin/option_types/_option_value_fields",
-    :name           => "add_#{f}_field",
-    :insert_before  => ".actions",
-    :text           => "<td> #{(f == 'default_option') ? "<%= f.check_box :#{f} %>" : "<%= f.text_field :#{f} %>"} </td>")
-end
+Deface::Override.new(
+  :virtual_path   => "spree/admin/option_types/_option_value_fields",
+  :name           => "add_extra_fields",
+  :insert_before  => ".actions",
+  :partial        => "spree/admin/option_types/extra_columns")

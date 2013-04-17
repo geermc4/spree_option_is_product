@@ -1,0 +1,14 @@
+<% if @option_type.product_based? %>
+  <td>
+    <%= f.text_field :quantity %>
+  </td>
+  <td>
+    <%= f.text_field :special_price %>
+  </td>
+  <td>
+    <%= f.check_box :default_option %>
+  </td>
+<% end %>
+
+    
+
