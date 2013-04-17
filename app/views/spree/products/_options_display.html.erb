@@ -32,7 +32,8 @@
                     <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
-                    <%= link_to '', Spree::Variant.find(v[:variant_id]).product, {:class => "icon_link with-tip icon-info-sign no-text" } %>
+                    <% p = Spree::Variant.find(v[:variant_id]).product %>
+                    <%= link_to '', p, {:class => "icon_link with-tip icon-info-sign no-text" } %>
                   </label>
                 </li>
               <% end %>
