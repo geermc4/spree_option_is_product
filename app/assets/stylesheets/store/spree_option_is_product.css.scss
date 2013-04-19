@@ -92,6 +92,18 @@
   overflow: hidden;
   position: relative;
 }
+#product-description{
+  .product-description{
+    &.read-more-toggle{
+      #read-more-mask{
+        display: block;
+      }
+    }
+    #read-more-mask{
+      display: none;
+    }
+  }
+}
 #read-more-mask{
   width: 100%;
   height: 75px;
