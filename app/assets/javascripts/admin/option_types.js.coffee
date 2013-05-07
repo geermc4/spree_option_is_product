@@ -12,6 +12,10 @@ jQuery ->
       ).show()
       return
     if $('#option_type_product_based:checked').length > 0
+      $('#option_values tr td').find('input').each( ->
+        if( !$(this).prop('id') )
+          $(this).attr 'id', (new Date().getTime())
+      )
       $('#new_add_option_value').appendTo("#add_variant")
 
       $('#add_variant').click ->
