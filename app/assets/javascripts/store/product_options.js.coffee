@@ -8,7 +8,11 @@ jQuery ->
       ).appendTo where
     if $('.product-description[data-hook="description"]').height() > 250
       read_more $('.product-description[data-hook="description"]')
+    trigger_original_price_hide = () ->
+      if $('#original-price').length > 0
+        $('#original-price').hide()
     $('.product_option').change (event)->
+      $('#original-price').hide()
       update_cart_options(event.currentTarget)
     update_cart_options = (options) ->
       el = $('fieldset ul li label input:checked', options)
@@ -19,18 +23,15 @@ jQuery ->
         $('#product_option_' + oid + '_price').val(parseFloat(el.siblings('input[name="option_' + oid + '_price"]').val(), 10))
         $('#product_option_' + oid + '_quantity').val(parseFloat(el.siblings('input[name="option_' + oid + '_qty"]').val(), 10))
         update_cart_total()
+    get_base_price = () ->
+      return parseFloat($('#base_price').val(), 10)
     update_cart_total = () ->
-      base_price = $('#base_price').val()
-      current_total = parseFloat(base_price, 10)
+      current_total = get_base_price()
       $('.product_option_prices').each(->
-        current_element = $(this)
-        multiply = 1
-        item_multiply = parseInt(current_element.siblings('.product_option_quantities').val(), 10)
-        if item_multiply > 0
-          multiply = item_multiply
-        current_total += (parseFloat(current_element.val(), 10) * multiply)
+        item_multiply = parseInt($(this).siblings('.product_option_quantities').val(), 10)
+        current_total += (parseFloat($(this).val(), 10) * ( ( item_multiply > 0 ) ? item_multiply : 1 ))
       )
       $('#product-price span.price').text "$" + ( current_total.toFixed(2) )
     $('.product_option').each(->
-        update_cart_options $(this)
+      update_cart_options $(this)
     )

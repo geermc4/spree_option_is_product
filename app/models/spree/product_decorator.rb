@@ -29,14 +29,17 @@ Spree::Product.class_eval do
     options
   end
 
-  def master_price
-    new_price = self.price
+  def master_price(*some_price)
+    new_price = ( !some_price.empty? ) ? some_price.try(:first) : self.price
     if !self.product_options.nil?
       options_price = self.product_options.select{ |po| po[:optional] == false }.map{ |opt, sum| opt[:options].first[:price] }.inject(:+)
       optional_values_default_pricing = self.product_options.select{ |po| po[:optional] == true }.collect{ |opt| opt[:options] }.collect{ |op| op.select{ |pop| pop[:default_option] == true }.first }.select{ |s| !s.nil? }.select{ |s| !s.empty? }.map{ |v| v[:price] }.inject(:+).to_f
       new_price += (options_price + (optional_values_default_pricing.nil? ? 0 : optional_values_default_pricing))
     end
     Spree::Money.new(new_price || 0, {:currency => self.currency} )
+  end
+  def master_client_price
+    self.master_price(Spree::Price.where(:variant_id => self.master.id).try(:first).amount)
   end
 
 end
