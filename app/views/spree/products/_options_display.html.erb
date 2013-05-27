@@ -31,8 +31,9 @@
                     <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option'} %>
                     <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
                     <% if spree_current_user %>
-                      <% if current_user.user_group_id == 1 %>
-                        - <del class="original-price"><%= Spree::Money.new(Spree::OptionValue.find(v[:id]).special_price || 0) %></del>
+                      <% special_price = Spree::OptionValue.find(v[:id]).special_price %>
+                      <% if current_user.user_group_id == 1 && v[:price] != special_price %>
+                        - <del class="original-price"><%= Spree::Money.new(special_price || 0) %></del>
                       <% end %>
                     <% end %>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
