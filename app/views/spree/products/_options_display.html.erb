@@ -1,13 +1,13 @@
 <% unless @product.product_options.blank? %>
   <div class="row" id="product-is-option-configure">
     <h2 class="product-title">Configure</h2>
-    <div class="product_options">
+    <div class="product_options_group">
       <% @product.product_options.each do |o| %>
         <%
           optional_value = o[:options].select{ |opt| opt[:default_option] == true }
           optional_value_id = (!optional_value.empty?) ? optional_value.first : {}
         %>
-        <div class="product_option">
+        <div class="product_options">
           <fieldset>
             <input type="hidden" name="product_option_id" value="<%= o[:id] %>" />
             <legend><%=o[:display] %></legend>
@@ -29,13 +29,9 @@
                 <li>
                   <label>
                     <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option'} %>
-                    <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
-                    <% if spree_current_user %>
-                      <% special_price = Spree::OptionValue.find(v[:id]).special_price %>
-                      <% if current_user.user_group_id == 1 && v[:price] != special_price %>
-                        - <del class="original-price"><%= Spree::Money.new(special_price || 0) %></del>
-                      <% end %>
-                    <% end %>
+                    <span class="options-row" data-hook="options-row">
+                      <strong><%= "#{v[:presentation]}" %></strong> - <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
+                    </span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
                     <% p = Spree::Variant.find(v[:variant_id]).product %>
