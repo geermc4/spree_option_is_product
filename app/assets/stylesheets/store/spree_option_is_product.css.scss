@@ -1,3 +1,17 @@
+table.stock-contents{
+  tr.stock-item{
+    td.line_item_arrow_bottom{
+      width: 42px;
+      padding: 0;
+      div.middle-arrow-select{
+        width: 100%;
+        height: 32px;
+        background: url(/assets/line_item_arrow.png) no-repeat 42px 10px;
+        padding-bottom: 30px;
+      }
+    }
+  }
+}
 #cart-items{
   tbody#line_items{
     tr{
