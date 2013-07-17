@@ -1,40 +1,41 @@
-#shipping_method{
-  .stock-shipping-method-title{
-    color: #222120;
-    font-weight: bold;
-    font-size: 12px;
-    background-color: transparent;
-    border-bottom: 1px solid lightgrey;
-    margin: 25px 0 0;
+table#line-items{
+  tbody{
+    tr{
+      border-bottom: none;
+      &.alt{
+        background-color: transparent;
+        td{
+          background-color: #fafafa;
+          &.line_item_arrow_bottom{
+            background-color: transparent;
+          }
+          &.order_item_description{
+            border-left: 1px solid #d9d9d9;
+          }
+        }
+      }
+      td.line_item_arrow_bottom{
+        width: 60px;
+        padding: 0;
+        div.middle-arrow-select{
+          width: 100%;
+          height: 32px;
+          background: url(/assets/line_item_arrow.png) no-repeat 60px 10px;
+          padding-bottom: 30px;
+        }
+      }
+    }
+  }
+  tfoot{
+  }
+  tfoot#subtotal{
+    display: table-footer-group;
+    vertical-align: middle;
+    border-color: inherit;
   }
 }
 table.stock-contents{
   tr.stock-item{
-    border-bottom: none;
-    &.alt{
-      background-color: transparent;
-    }
-    &.slave-item{
-      td.item-name{
-        h4{
-          font-size: 12px;
-        }
-      }
-    }
-    &.alt.slave-item{
-      td{
-        background-color: #fafafa;
-        &.line_item_arrow_bottom{
-          background-color: transparent;
-        }
-        &.item-name{
-          border-left: 1px solid #d9d9d9;
-          h4{
-            font-size: 12px;
-          }
-        }
-      }
-    }
     td.line_item_arrow_bottom{
       width: 42px;
       padding: 0;
