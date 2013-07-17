@@ -1,5 +1,40 @@
+#shipping_method{
+  .stock-shipping-method-title{
+    color: #222120;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: transparent;
+    border-bottom: 1px solid lightgrey;
+    margin: 25px 0 0;
+  }
+}
 table.stock-contents{
   tr.stock-item{
+    border-bottom: none;
+    &.alt{
+      background-color: transparent;
+    }
+    &.slave-item{
+      td.item-name{
+        h4{
+          font-size: 12px;
+        }
+      }
+    }
+    &.alt.slave-item{
+      td{
+        background-color: #fafafa;
+        &.line_item_arrow_bottom{
+          background-color: transparent;
+        }
+        &.item-name{
+          border-left: 1px solid #d9d9d9;
+          h4{
+            font-size: 12px;
+          }
+        }
+      }
+    }
     td.line_item_arrow_bottom{
       width: 42px;
       padding: 0;
