@@ -27,7 +27,11 @@ class ProductKit
       $('#selected_option_' + oid + ' span').text el.siblings('.options-row').find('strong').text()
       $('#product_option_' + oid).val(el.val())
       $('#product_option_' + oid + '_price').val(parseFloat(el.siblings('input[name="option_' + oid + '_price"]').val(), 10))
-      $('#product_option_' + oid + '_quantity').val(parseFloat(el.siblings('input[name="option_' + oid + '_qty"]').val(), 10))
+      quantity_not_zero = parseFloat(el.siblings('input[name="option_' + oid + '_qty"]').val(), 10)
+      #quantity_not_zero = quantity_not_zero === 0 ? 1 : quantity_not_zero
+      if quantity_not_zero == 0
+        quantity_not_zero = 1
+      $('#product_option_' + oid + '_quantity').val(quantity_not_zero)
       this.update_cart_total()
 
   #Update Order total
@@ -35,7 +39,7 @@ class ProductKit
     current_total = @get_base_price()
     $('.product_option_prices').each (index, element) =>
       item_multiply = parseInt($(element).siblings('.product_option_quantities').val(), 10)
-      current_total += (parseFloat($(element).val(), 10) * ( ( item_multiply > 0 ) ? item_multiply : 1 ))
+      current_total += (parseFloat($(element).val(), 10) * item_multiply)
     $('#product-price span.price').text "$" + ( current_total.toFixed(2) )
 
 jQuery ->

@@ -19,7 +19,9 @@
                 <li>
                   <label>
                     <%= radio_button_tag "option_#{o[:display].downcase.gsub(/\s/, '_')}", "", (optional_value.empty? ? true : false), {:class => 'product_option'} %>
-                    <strong>No <%=o[:display] %></strong>
+                    <span class="options-row" data-hook="options-row">
+                      <strong>No <%=o[:display] %></strong>
+                    </span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="0" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "0" %>" />
                   </label>
