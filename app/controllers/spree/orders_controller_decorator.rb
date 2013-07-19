@@ -12,7 +12,7 @@ Spree::OrdersController.class_eval do
         next if v.blank?
         ov = Spree::OptionValue.find(v)
         # Force new line_item when working with product's options
-        li = current_order.contents.add(ov.variant,ov.quantity,current_currency, true)
+        li = current_order.contents.add(ov.variant,ov.quantity,current_currency, nil, true)
         li.price = ov.special_price || ov.variant.price
         li.parent_id = parent.id
         li.save!
