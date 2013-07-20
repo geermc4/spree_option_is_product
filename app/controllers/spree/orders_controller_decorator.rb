@@ -6,16 +6,24 @@ Spree::OrdersController.class_eval do
 
   def add_children
     unless params["product_options"].blank?
-      parent = current_order.find_line_item_by_variant(Spree::Variant.find(params["variants"].first[0]))
-
-      params["product_options"].each do |k,v|
-        next if v.blank?
-        ov = Spree::OptionValue.find(v)
-        # Force new line_item when working with product's options
-        li = current_order.contents.add(ov.variant,ov.quantity,current_currency, nil, true)
-        li.price = ov.special_price || ov.variant.price
-        li.parent_id = parent.id
-        li.save!
+      unless params["variants"].blank?
+        parent = current_order.find_line_item_by_variant(Spree::Variant.find(params["variants"].first[0]))
+        params["product_options"].each do |k,v|
+          next if v.blank?
+          ov = Spree::OptionValue.find(v)
+          if !!spree_current_user && !!spree_current_user.user_group && !! spree_current_user.user_group.name.match(/^Distributor.*/)
+            price = ov.distributor_price
+          else
+            price = ov.special_price
+          end
+          # Spree increments the quantity of existing line items when
+          # populating the order if adding the same product.
+          # Here we force the creation of new LineItems so we don't
+          # merge product's options with existing items in the order.
+          li = current_order.contents.add(ov.variant,(ov.quantity * parent.quantity),current_currency, nil, (price || ov.variant.price), true)
+          li.parent_id = parent.id
+          li.save!
+        end
       end
     end
   end
