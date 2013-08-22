@@ -7,7 +7,7 @@ Spree::OrdersController.class_eval do
   def add_children
     unless params["product_options"].blank?
       unless params["variants"].blank?
-        parent = current_order.find_line_item_by_variant(Spree::Variant.find(params["variants"].first[0]))
+        parent = current_order.find_parent_line_item_by_variant(Spree::Variant.find(params["variants"].first[0]))
         params["product_options"].each do |k,v|
           next if v.blank?
           ov = Spree::OptionValue.find(v)
