@@ -3,3 +3,6 @@ en:
   add_this_variant: "Add this variant"
   special_price: "Special Price"
   optional: "Optional?"
+  spree:
+    product_option_not_available: "not available"
+    product_option_backorder: "backorder"
