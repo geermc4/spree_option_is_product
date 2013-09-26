@@ -9,22 +9,11 @@ Spree::Product.class_eval do
 
     options = []
     option_types.each do |o|
-      values = []
-      o.option_values.each do |v|
-        values << {
-          :id             => v.id,
-          :presentation   => v.presentation,
-          :quantity       => v.quantity,
-          :variant_id     => v.variant_id,
-          :price          => v.special_price || v.variant.price,
-          :default_option => v.default_option,
-        }
-      end
       options << {
         :id       => o.id,
         :display  => o.presentation,
         :optional => o.optional?,
-        :options  => values }
+        :options  => o.option_values.collect(&:to_hash) }
     end
     options
   end
