@@ -23,7 +23,7 @@ Spree::Variant.class_eval do
 
   def default_stock_location_from_shipping_category
     stock_location_id = 1
-    if shipping_category == 1
+    if shipping_category_id == 1
       stock_location_id = 2
     end
     return Spree::StockLocation.find(stock_location_id)
