@@ -30,7 +30,7 @@
               <% o[:options].each_with_index do |v, i| %>
                 <li class="lucky-option <%= (v[:available] ? "available" : "not_available") %>">
                   <label>
-                    <%= radio_button_tag( "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:idr]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option', :disabled => !v[:available]} ) %>
+                    <%= radio_button_tag( "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option', :disabled => !v[:available]} ) %>
                     <span class="options-row" data-hook="options-row">
                       <strong><%= "#{v[:presentation]}" %></strong> -
                       <% if v[:state].present? %>
