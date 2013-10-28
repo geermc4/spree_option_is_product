@@ -11,7 +11,7 @@ module SpreeOptionIsProduct
         append_file "app/assets/stylesheets/store/all.css", " *= require store/spree_option_is_product\n"
       end
       def add_migrations
-        run 'rake railties:install:migrations FROM=spree_option_is_product'
+        run 'rake railties:install:migrations from=spree_option_is_product'
       end
       def run_migrations
         run_migrations = options[:auto_run_migrations] || ['', 'y', 'Y'].include?(ask 'Would you like to run the migrations now? [Y/n]')

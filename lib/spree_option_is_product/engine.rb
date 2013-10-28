@@ -1,6 +1,6 @@
 module SpreeOptionIsProduct
   class Engine < Rails::Engine
-    engine_name 'spree_variant_all_options'
+    engine_name 'spree_option_is_product'
 
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
