@@ -40,7 +40,6 @@
                       <% end %>
                       <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
                     </span>
-                    <input type="hidden" name="caca" value="<%= v[:available] %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
                     <% p = Spree::Variant.find(v[:variant_id]).product %>
