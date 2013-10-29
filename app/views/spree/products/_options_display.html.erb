@@ -32,13 +32,15 @@
                   <label>
                     <%= radio_button_tag( "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option', :disabled => !v[:available]} ) %>
                     <span class="options-row" data-hook="options-row">
-                      <strong><%= "#{v[:presentation]}" %></strong> -
+                      <strong><%= "#{v[:presentation]}" %></strong>
                       <% if v[:state].present? %>
                         <span class="product-state">
-                          (<%= v[:state] %>)
-                        </span> -
+                          - (<%= v[:state] %>)
+                        </span>
                       <% end %>
-                      <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
+                      <% if v[:price] > 0 %>
+                        <span><%= "- #{Spree::Money.new(v[:price] || 0)}" %></span>
+                      <% end %>
                     </span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
