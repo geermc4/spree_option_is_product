@@ -33,7 +33,7 @@
                     <%= radio_button_tag( "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option', :disabled => !v[:available]} ) %>
                     <span class="options-row" data-hook="options-row">
                       <strong><%= "#{v[:presentation]}" %></strong>
-                      <% if v[:state].present? %>
+                      <% if v[:state].present? && @product.shipping_category.try(:name) == 'DIY' %>
                         <span class="product-state">
                           - (<%= v[:state] %>)
                         </span>
