@@ -10,7 +10,7 @@ Deface::Override.new(
 Deface::Override.new(
   :virtual_path => manifest_path,
   :name => 'add_kit_classes_to_checkout_delivery_title',
-  :surround => "code[erb-loud]:contains('item.variant.name')",
+  :surround => "erb[loud]:contains('item.variant.name')",
   :text => '<h4><%= render_original %></h4>',
 )
 
