@@ -7,15 +7,14 @@ Spree::Product.class_eval do
   def product_options
     return nil unless has_product_options?
 
-    options = []
-    option_types.each do |o|
-      options << {
+    option_types.map do |o|
+      {
         :id       => o.id,
         :display  => o.presentation,
         :optional => o.optional?,
-        :options  => o.option_values.collect(&:to_hash) }
+        :options  => o.option_values.collect(&:to_hash)
+      }
     end
-    options
   end
 
   def master_price(*some_price)

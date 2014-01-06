@@ -30,21 +30,21 @@
               <% o[:options].each_with_index do |v, i| %>
                 <li class="lucky-option <%= (v[:available] ? "available" : "not_available") %>">
                   <label>
-                    <%= radio_button_tag( "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:idr]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option', :disabled => !v[:available]} ) %>
+                    <%= radio_button_tag( "option_#{o[:display].downcase.gsub(/\s/, '_')}", v[:id], (!optional_value.empty? && optional_value_id[:id] == v[:id]) || (!o[:optional] && optional_value.empty? && i == 0), {:class => 'product_option', :disabled => !v[:available]} ) %>
                     <span class="options-row" data-hook="options-row">
-                      <strong><%= "#{v[:presentation]}" %></strong> -
-                      <% if v[:state].present? %>
+                      <strong><%= "#{v[:presentation]}" %></strong>
+                      <% if v[:state].present? && @product.shipping_category.try(:name) == 'DIY' %>
                         <span class="product-state">
-                          (<%= v[:state] %>)
-                        </span> -
+                          - (<%= v[:state] %>)
+                        </span>
                       <% end %>
-                      <span><%= "#{Spree::Money.new(v[:price] || 0)}" %></span>
+                      <% if v[:price] > 0 %>
+                        <span><%= "- #{Spree::Money.new(v[:price] || 0)}" %></span>
+                      <% end %>
                     </span>
-                    <input type="hidden" name="caca" value="<%= v[:available] %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
-                    <% p = Spree::Variant.find(v[:variant_id]).product %>
-                    <%= link_to '', p, {:class => "icon_link with-tip icon-info-sign no-text" } %>
+                    <%= link_to("", product_path(v[:option_product]), {:class => "icon_link with-tip icon-info-sign no-text" }) if v[:option_product].present? %>
                   </label>
                 </li>
               <% end %>
