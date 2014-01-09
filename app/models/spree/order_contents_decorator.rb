@@ -13,7 +13,8 @@ Spree::OrderContents.class_eval do
       line_item.currency = currency unless currency.nil?
       line_item.save
     else
-      line_item = Spree::LineItem.new(quantity: quantity)
+      line_item = order.line_items.new(variant: variant)
+      line_item.quantity = quantity
       line_item.target_shipment = shipment
       line_item.variant = variant
       if currency
@@ -22,10 +23,8 @@ Spree::OrderContents.class_eval do
       else
         line_item.price    = price || variant.price
       end
-      order.line_items << line_item
-      line_item
     end
-
+    line_item.save
     order.reload
     line_item
   end
