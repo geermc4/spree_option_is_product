@@ -20,10 +20,9 @@ Spree::OrdersController.class_eval do
           # Spree increments the quantity of existing line items when
           # populating the order if adding the same product.
           # Here we force the creation of new LineItems so we don't
-          # merge product's options with existing items in the order.
-          li = current_order.contents.add(ov.variant,(ov.quantity * parent.quantity),current_currency, nil, (price || ov.variant.price), true)
-          li.parent_id = parent.id
-          li.save!
+          # merge product's options with existing items in the order
+          # by passing the parent_id indicating that it's an option.
+          current_order.contents.add(ov.variant,(ov.quantity * parent.quantity),current_currency, nil, (price || ov.variant.price), parent.id)
         end
       end
     end
