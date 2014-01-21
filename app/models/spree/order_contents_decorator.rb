@@ -30,4 +30,17 @@ Spree::OrderContents.class_eval do
     line_item
   end
 
+  # Override from spree to add `line_item` arg.
+  # Since spree 2.2 the inventory_unit is associated to the line_item
+  # so no need to "find" it if present
+  def remove(variant, quantity = 1, shipment = nil, line_item = nil)
+    line_item = line_item || order.find_line_item_by_variant(variant)
+
+    unless line_item
+      raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
+    end
+
+    remove_from_line_item(line_item, variant, quantity, shipment)
+  end
+
 end
