@@ -1,8 +1,9 @@
 Spree::OrderContents.class_eval do
-
-  def add(variant, quantity=1, currency=nil, shipment=nil, price=nil, parent_id=nil)
+  def add(variant, quantity=1, currency=nil, shipment=nil, price=nil, parent_id=nil, options=[])
     line_item = parent_id ? nil : order.find_line_item_by_variant(variant)
-    add_to_line_item(line_item, variant, quantity, currency, shipment, price, parent_id)
+    li = add_to_line_item(line_item, variant, quantity, currency, shipment, price, parent_id)
+    add_options(options,li,currency,shipment) unless options.blank?
+    li #just incase the return value matters somewhere
   end
 
   # Override from spree's original method to add the `price` argument passed by `add`
@@ -41,6 +42,22 @@ Spree::OrderContents.class_eval do
     end
 
     remove_from_line_item(line_item, variant, quantity, shipment)
+  end
+
+  def determine_variant_price(option_value)
+    if order.user.present? && order.group_order?
+      option_value.distributor_price || option_value.variant.price_for_user(order.user)
+    else
+      option_value.special_price || option_value.variant.price
+    end
+  end
+
+  def add_options(options,parent,currency,shipment)
+    options.each do |o|
+      ov = Spree::OptionValue.find(o)
+      #add_to_line_item(nil,ov.variant, ov.quantity, currency, shipment, determine_variant_price(ov), parent.id)
+      add_to_line_item(nil,ov.variant, ov.quantity, currency, shipment, ov.special_price || ov.variant.price, parent.id)
+    end
   end
 
 end
