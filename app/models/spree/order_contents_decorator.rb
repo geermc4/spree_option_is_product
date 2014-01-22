@@ -56,7 +56,7 @@ Spree::OrderContents.class_eval do
     options.each do |o|
       ov = Spree::OptionValue.find(o)
       #add_to_line_item(nil,ov.variant, ov.quantity, currency, shipment, determine_variant_price(ov), parent.id)
-      add_to_line_item(nil,ov.variant, ov.quantity, currency, shipment, ov.special_price || ov.variant.price, parent.id)
+      add_to_line_item(nil,ov.variant, (ov.quantity * parent.quantity), currency, shipment, ov.special_price || ov.variant.price, parent.id)
     end
   end
 
