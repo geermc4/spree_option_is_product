@@ -41,7 +41,12 @@ Spree::OrderContents.class_eval do
       raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
     end
 
-    remove_from_line_item(line_item, variant, quantity, shipment)
+    # If removing the item success then proceed to remove children (parts)
+    if remove_from_line_item(line_item, variant, quantity, shipment)
+      line_item.children.each do |child|
+        remove_from_line_item(child, child.variant, child.quantity, shipment)
+      end
+    end
   end
 
   def determine_variant_price(option_value)
@@ -58,6 +63,22 @@ Spree::OrderContents.class_eval do
       #add_to_line_item(nil,ov.variant, ov.quantity, currency, shipment, determine_variant_price(ov), parent.id)
       add_to_line_item(nil,ov.variant, (ov.quantity * parent.quantity), currency, shipment, ov.special_price || ov.variant.price, parent.id)
     end
+  end
+
+  private
+
+  def remove_from_line_item(line_item, variant, quantity, shipment=nil)
+    line_item.quantity += -quantity
+    line_item.target_shipment= shipment
+
+    if line_item.quantity == 0
+      Spree::OrderInventory.new(order, line_item).verify(shipment)
+      line_item.destroy
+    else
+      line_item.save!
+    end
+
+    line_item
   end
 
 end
