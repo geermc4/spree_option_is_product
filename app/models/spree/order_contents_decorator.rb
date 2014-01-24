@@ -42,10 +42,12 @@ Spree::OrderContents.class_eval do
     end
 
     # If removing the item success then proceed to remove children (parts)
-    if remove_from_line_item(line_item, variant, quantity, shipment)
-      line_item.children.each do |child|
+    children = line_item.children
+    ActiveRecord::Base.transaction do
+      children.each do |child|
         remove_from_line_item(child, child.variant, child.quantity, shipment)
       end
+      remove_from_line_item(line_item, variant, quantity, shipment)
     end
   end
 
@@ -72,12 +74,12 @@ Spree::OrderContents.class_eval do
     line_item.target_shipment= shipment
 
     if line_item.quantity == 0
-      Spree::OrderInventory.new(order, line_item).verify(shipment)
       line_item.destroy
     else
       line_item.save!
     end
 
+    order.reload
     line_item
   end
 
