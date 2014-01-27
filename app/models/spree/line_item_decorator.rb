@@ -12,7 +12,7 @@ Spree::LineItem.class_eval do
   private
   def update_inventory
     if changed?
-      if line_item.parent_id
+      if self.parent_id
         self.order.shipments.each do |shipment|
           Spree::OrderInventory.new(self.order, self).verify(shipment)
         end
