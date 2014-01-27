@@ -45,7 +45,10 @@ Spree::OrderContents.class_eval do
     children = line_item.children
     ActiveRecord::Base.transaction do
       children.each do |child|
-        remove_from_line_item(child, child.variant, child.quantity, shipment)
+        target_shipments = order.shipments.select {|s| (s.ready? || s.pending?) && s.inventory_units.map(&:line_item).flatten.include?(child) }
+        target_shipments.each do |s|
+          remove_from_line_item(child, child.variant, quantity, s)
+        end
       end
       remove_from_line_item(line_item, variant, quantity, shipment)
     end
@@ -73,7 +76,7 @@ Spree::OrderContents.class_eval do
     line_item.quantity += -quantity
     line_item.target_shipment= shipment
 
-    if line_item.quantity == 0
+    if line_item.quantity <= 0
       line_item.destroy
     else
       line_item.save!
