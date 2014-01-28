@@ -44,7 +44,7 @@
                     </span>
                     <input type="hidden" name="<%= "option_#{o[:id]}_price" %>" value="<%= "#{v[:price]}" %>" />
                     <input type="hidden" name="<%= "option_#{o[:id]}_qty" %>" value="<%= "#{v[:quantity]}" %>" />
-                    <%= link_to("", product_path(v[:option_product]), {:class => "icon_link with-tip icon-info-sign no-text" }) if v[:option_product].present? %>
+                    <%= link_to("", product_path(v[:option_product]), {:class => "fa fa-exclamation-circle" }) if v[:option_product].present? %>
                   </label>
                 </li>
               <% end %>
